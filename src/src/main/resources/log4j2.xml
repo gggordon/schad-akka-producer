@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorinterval="30" status="info" strict="true">
+    <Properties>
+        <Property name="mainLogFileName">log/app.log</Property>
+        <Property name="transformerLogFileName">log/event-transformer.log</Property>
+    </Properties>
+    <Appenders>
+        <!-- General Appenders -->
+        <Appender type="Console" name="ConsoleAppender">
+            <Layout type="PatternLayout" pattern="%d %p [%t] %m%n" />
+        </Appender>
+        <Appender type="File" name="FileAppender" fileName="${mainLogFileName}">
+            <Layout type="PatternLayout" pattern="%d %p %C [%t] %m%n" />
+        </Appender>
+        <!-- /General Appenders -->
+        <!-- MainSample Specific Appenders -->
+        <Appender type="File" name="TransformerFileAppender" fileName="${transformerLogFileName}">
+            <Layout type="PatternLayout" pattern="%d %p %C [%t] %m%n" />
+        </Appender>
+        <!-- /MainSample Appenders -->
+    </Appenders>
+    <Loggers>
+        <Root level="all">
+            <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="FileAppender" />
+        </Root>
+        <Logger name="com.ggordon.schad.akka_producer.transformers.ClickStreamRecordTextTransformer" level="all" additivity="false">
+            <AppenderRef ref="TransformerFileAppender"/>
+            <AppenderRef ref="ConsoleAppender" />
+        </Logger>
+    </Loggers>
+</Configuration>
